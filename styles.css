@@ -80,20 +80,24 @@ button { font: inherit; }
   text-shadow: 0 1px 10px var(--surface);
 }
 
-.brand-text strong { font-weight: 700; }
+.brand-mark {
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
+  
+}
 
 .brand-mark {
-  width: 30px;
-  height: 30px;
-  border-radius: 9px;
-  background: linear-gradient(160deg, var(--maroon), var(--maroon-dark));
+  width: 40px;
+  height: 40px;
+
+  background:transparent;
   display: grid;
   place-items: center;
-  color: #fff;
+
   font-family: Poppins, sans-serif;
   font-weight: 700;
   font-size: 15px;
-  box-shadow: 0 4px 10px rgba(110, 15, 31, .35);
 }
 
 .icon-button, .control-button {
@@ -115,11 +119,13 @@ html[data-theme="dark"] .sun-icon { display: none; }
 html[data-theme="dark"] .moon-icon { display: block; }
 
 .search-card {
+  --card-margin-top: 5px; 
+  
   position: absolute;
   z-index: 2;
   left: 20px;
   right: 20px;
-  top: max(102px, calc(env(safe-area-inset-top) + 84px));
+  top: calc(env(safe-area-inset-top) + 58px + var(--card-margin-top));  
   padding: 14px 16px 12px;
   max-width: 380px;
   border: 1px solid var(--border);

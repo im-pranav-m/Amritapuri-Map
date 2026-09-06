@@ -28,35 +28,26 @@ const CHIP_ORDER = ["all", "campus", "hostelBoys", "hostelGirls", "hospital", "p
 
 const cartoApiKey = "cb1_2ynn_1_e2db0c820448acae479fa430";
 
-
 const PLACES = [
   { id: "c1", name: "Amrita Vishwa Vidyapeetham \u2013 Amritapuri", category: "campus", sub: "Main campus \u00b7 Engineering & Sciences", coords: [9.093937, 76.4918194] },
   { id: "c2", name: "Amrita School of Business, Amritapuri", category: "campus", sub: "Management campus", coords: [9.0928985, 76.4898167] },
-
   { id: "h1", name: "Shivam Hostel", category: "hostelBoys", sub: "Boys hostel", coords: [9.0983829, 76.4900625] },
   { id: "h2", name: "Anugraham Hostel", category: "hostelBoys", sub: "Boys hostel", coords: [9.1002005, 76.4897883] },
   { id: "h3", name: "Saraswathi Hostel", category: "hostelGirls", sub: "Girls hostel", coords: [9.0943579, 76.4883774] },
-
   { id: "m1", name: "Nandu Medicals", category: "pharmacy", sub: "Medical shop \u00b7 pharmacy", coords: [9.0922921, 76.4943018] },
   { id: "m2", name: "Sri Govinda Medicals", category: "pharmacy", sub: "Medical shop \u00b7 pharmacy", coords: [9.0920369, 76.4935367] },
   { id: "m3", name: "Amrita Ayurveda Hospital", category: "hospital", sub: "Hospital", coords: [9.0885237, 76.4930295] },
-
   { id: "s1", name: "IT Zone Vallikkavu", category: "laptop", sub: "Laptop & computer service", coords: [9.0925124, 76.4939956] },
   { id: "s2", name: "Amrita Technologies", category: "laptop", sub: "Computer service centre", coords: [9.0946676, 76.4929727] },
   { id: "p1", name: "Phones Hub", category: "phone", sub: "Mobile recharge & service", coords: [9.0921159, 76.4941082] },
-
   { id: "b1", name: "POSH Unisex Salon", category: "salon", sub: "Barbershop", coords: [9.0917017, 76.4922794] },
   { id: "b2", name: "Bond Unisex Salon", category: "salon", sub: "Barbershop", coords: [9.0910917, 76.4908555] },
-
   { id: "g1", name: "Core Fitness Gym", category: "gym", sub: "Gym", coords: [9.0915049, 76.4915472] },
   { id: "g2", name: "BodyTech Multi-Fitness Centre", category: "gym", sub: "Gym", coords: [9.0919433, 76.4943281] },
-
   { id: "t1", name: "Kayamkulam Junction", category: "railway", sub: "Nearest railway station \u00b7 ~9.5 km", coords: [9.1813368, 76.5123891] },
   { id: "t2", name: "Kinarumukku Bus Stop", category: "bus", sub: "Bus stop", coords: [9.0969134, 76.4929815] },
   { id: "t3", name: "Karelil Bus Stop", category: "bus", sub: "Bus stop", coords: [9.0963403, 76.4960020] },
-
   { id: "y1", name: "Swetha's Paying Guest", category: "hotel", sub: "PG / guest stay near campus", coords: [9.0965828, 76.4935979] },
-
   { id: "l1", name: "Amritapuri Ashram", category: "landmark", sub: "Mata Amritanandamayi Math", coords: [9.0885386, 76.4872978] },
   { id: "l2", name: "Parayakadavu Beach", category: "landmark", sub: "Arabian Sea", coords: [9.0891010, 76.4853891] }
 ];
@@ -116,6 +107,7 @@ function distanceLabel(place) {
 
 function setRangeWarning(show) {
   const warning = document.getElementById("range-warning");
+  if(!warning) return;
   warning.hidden = !show;
   if (!show) {
     warning.classList.remove("is-expanded");
@@ -277,11 +269,15 @@ function setStatus(message, searching = false) {
 function locateUser() {
   if (!navigator.geolocation) { setStatus("Location is not supported by this browser"); return; }
   setStatus("Finding your location\u2026", true);
+  
   navigator.geolocation.getCurrentPosition(
     ({ coords }) => {
       userPosition = [coords.latitude, coords.longitude];
-      isWithinCampusRange = haversineKm(userPosition, CAMPUS_CENTER) <= CAMPUS_LIMIT_METRES / 1000;
+      
+      const distance = haversineKm(userPosition, CAMPUS_CENTER);
+      isWithinCampusRange = distance <= CAMPUS_LIMIT_METRES / 1000;
       setRangeWarning(!isWithinCampusRange);
+      
       const userIcon = L.divIcon({ className: "", html: '<div class="user-marker"></div>', iconSize: [18, 18], iconAnchor: [9, 9] });
       if (userMarker) {
         userMarker.setLatLng(userPosition);
@@ -291,15 +287,17 @@ function locateUser() {
         accuracyCircle = L.circle(userPosition, { radius: coords.accuracy, color: "#287cf1", weight: 1, fillColor: "#287cf1", fillOpacity: .1, interactive: false }).addTo(map);
       }
       if (isWithinCampusRange) map.flyTo(userPosition, Math.max(map.getZoom(), 15.5), { duration: .8 });
-      setStatus(isWithinCampusRange ? "Your location is shown on the map" : "You are outside the 17 km campus range");
+      
+      setStatus(isWithinCampusRange ? "Your location is shown on the map" : `You are outside the 17km range (${distance.toFixed(1)} km away)`);
       renderPlaces();
+      
       if (activePlace) {
         renderDetail(activePlace);
         requestRoute(activePlace);
       }
     },
     (error) => {
-      const message = error.code === error.PERMISSION_DENIED ? "Location permission was not granted" : "Couldn\u2019t find your location";
+      const message = error.code === error.PERMISSION_DENIED ? "Grant permission for location" : "Couldn\u2019t find your location";
       setStatus(message);
     },
     { enableHighAccuracy: true, timeout: 10000, maximumAge: 30000 }
@@ -355,10 +353,12 @@ function initMap() {
   document.getElementById("zoom-out").addEventListener("click", () => map.zoomOut());
 
   const warning = document.getElementById("range-warning");
-  warning.addEventListener("click", () => {
-    const expanded = warning.classList.toggle("is-expanded");
-    warning.setAttribute("aria-expanded", String(expanded));
-  });
+  if(warning) {
+    warning.addEventListener("click", () => {
+      const expanded = warning.classList.toggle("is-expanded");
+      warning.setAttribute("aria-expanded", String(expanded));
+    });
+  }
 
   const handle = document.getElementById("sheet-handle");
   const sheet = document.getElementById("sheet");

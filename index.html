@@ -17,14 +17,10 @@
   <body>
     <main class="app-shell">
       <div id="map" aria-label="Interactive map of the Amritapuri campus area"></div>
-      <button class="range-warning" id="range-warning" type="button" role="alert" aria-label="Campus range warning" aria-expanded="false" hidden>
-        <i class="fi fi-rr-triangle-warning" aria-hidden="true"></i>
-        <span class="range-warning-message"><strong>Outside campus range</strong>Browse freely; routing is available within 17 km of campus.</span>
-      </button>
 
       <header class="topbar">
         <a class="brand" href="#" aria-label="Amritapuri Campus Map home">
-          <span class="brand-mark" aria-hidden="true">A</span>
+          <img class="brand-mark" src="https://upload.wikimedia.org/wikipedia/en/3/30/Amrita_Vishwa_Vidyapeetham_-_Logo_Icon.svg?utm_source=en.wikipedia.org&utm_campaign=index&utm_content=original" alt="Amrita Logo" />
           <span class="brand-text">Amritapuri <strong>Campus Map</strong></span>
         </a>
         <button class="icon-button theme-toggle" type="button" aria-label="Switch to dark mode" title="Switch theme">
@@ -41,7 +37,8 @@
         </div>
         
         <div class="chips" id="chips" role="tablist" aria-label="Filter by category"></div>
-        <p class="location-status"><span class="status-dot"></span><span id="status-text">Finding your location\u2026</span></p>
+        <p class="location-status"><span class="status-dot"></span><span id="status-text">Finding your location…</span></p>
+
       </section>
 
       <div class="map-controls">
