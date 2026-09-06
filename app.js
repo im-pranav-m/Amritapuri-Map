@@ -115,7 +115,16 @@ function distanceLabel(place) {
 }
 
 function setRangeWarning(show) {
-  document.getElementById("range-warning").hidden = !show;
+  const warning = document.getElementById("range-warning");
+  warning.hidden = !show;
+  if (!show) {
+    warning.classList.remove("is-expanded");
+    warning.setAttribute("aria-expanded", "false");
+  }
+}
+
+function setSheetCollapsed(collapsed) {
+  document.getElementById("sheet").classList.toggle("collapsed", collapsed);
 }
 
 function matchesFilters(place) {
@@ -181,6 +190,7 @@ function applyMarkerVisibility() {
 }
 
 function selectPlace(place) {
+  setSheetCollapsed(false);
   activePlace = place;
   map.flyTo(place.coords, 17, { duration: 0.65 });
   Object.entries(markerById).forEach(([id, marker]) => {
@@ -344,9 +354,47 @@ function initMap() {
   document.getElementById("zoom-in").addEventListener("click", () => map.zoomIn());
   document.getElementById("zoom-out").addEventListener("click", () => map.zoomOut());
 
+  const warning = document.getElementById("range-warning");
+  warning.addEventListener("click", () => {
+    const expanded = warning.classList.toggle("is-expanded");
+    warning.setAttribute("aria-expanded", String(expanded));
+  });
+
   const handle = document.getElementById("sheet-handle");
   const sheet = document.getElementById("sheet");
-  handle.addEventListener("click", () => sheet.classList.toggle("collapsed"));
+  let dragStartY = null;
+  let dragged = false;
+  handle.addEventListener("pointerdown", (event) => {
+    dragStartY = event.clientY;
+    dragged = false;
+    sheet.classList.add("is-dragging");
+    handle.setPointerCapture(event.pointerId);
+  });
+  handle.addEventListener("pointermove", (event) => {
+    if (dragStartY !== null && Math.abs(event.clientY - dragStartY) > 8) dragged = true;
+  });
+  handle.addEventListener("pointerup", (event) => {
+    if (dragStartY === null) return;
+    const deltaY = event.clientY - dragStartY;
+    sheet.classList.remove("is-dragging");
+    if (dragged) setSheetCollapsed(deltaY > 0);
+    else setSheetCollapsed(!sheet.classList.contains("collapsed"));
+    dragStartY = null;
+  });
+  handle.addEventListener("pointercancel", () => {
+    dragStartY = null;
+    sheet.classList.remove("is-dragging");
+  });
+
+  const placesList = document.getElementById("places");
+  let listStartY = null;
+  placesList.addEventListener("touchstart", (event) => {
+    if (placesList.scrollTop <= 0) listStartY = event.touches[0].clientY;
+  }, { passive: true });
+  placesList.addEventListener("touchend", (event) => {
+    if (listStartY !== null && event.changedTouches[0].clientY - listStartY > 42) setSheetCollapsed(true);
+    listStartY = null;
+  }, { passive: true });
 }
 
 initMap();

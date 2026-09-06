@@ -17,10 +17,10 @@
   <body>
     <main class="app-shell">
       <div id="map" aria-label="Interactive map of the Amritapuri campus area"></div>
-      <aside class="range-warning" id="range-warning" role="alert" hidden>
+      <button class="range-warning" id="range-warning" type="button" role="alert" aria-label="Campus range warning" aria-expanded="false" hidden>
         <i class="fi fi-rr-triangle-warning" aria-hidden="true"></i>
-        <span><strong>Outside campus range</strong>Browse the map freely; routing is available within 17 km of campus.</span>
-      </aside>
+        <span class="range-warning-message"><strong>Outside campus range</strong>Browse freely; routing is available within 17 km of campus.</span>
+      </button>
 
       <header class="topbar">
         <a class="brand" href="#" aria-label="Amritapuri Campus Map home">
@@ -39,6 +39,7 @@
           <svg class="search-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m20 20-3.6-3.6"/></svg>
           <input id="search-input" type="search" placeholder="Search hostels, medical shops, gyms…" aria-label="Search places" />
         </div>
+        
         <div class="chips" id="chips" role="tablist" aria-label="Filter by category"></div>
         <p class="location-status"><span class="status-dot"></span><span id="status-text">Finding your location\u2026</span></p>
       </section>
@@ -52,7 +53,7 @@
       </div>
 
       <section class="place-sheet" id="sheet" aria-label="Places around campus">
-        <div class="sheet-handle" id="sheet-handle"></div>
+        <button class="sheet-grabber" id="sheet-handle" type="button" aria-label="Expand or collapse locations"><span class="sheet-handle"></span></button>
         <div class="sheet-list-view">
           <div class="sheet-title-row"><h2>Around the campus</h2><span id="result-count"></span></div>
           <div class="places" id="places"></div>
