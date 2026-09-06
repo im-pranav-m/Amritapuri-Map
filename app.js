@@ -1,9 +1,3 @@
-/* ------------------------------------------------------------------
-   Amritapuri Campus Map — data + logic
-   Coordinates are real locations around Amrita Vishwa Vidyapeetham's
-   Amritapuri campus, Vallikavu / Clappana, Kollam, Kerala.
-------------------------------------------------------------------- */
-
 const CAMPUS_CENTER = [9.0940, 76.4915];
 const CAMPUS_LIMIT_METRES = 17_000;
 const CAMPUS_BOUNDS = L.latLng(CAMPUS_CENTER).toBounds(CAMPUS_LIMIT_METRES * 2);
@@ -36,69 +30,56 @@ const CHIP_ORDER = ["all", "campus", "restaurant", "bakery", "print", "bank", "l
 const cartoApiKey = "cb1_2ynn_1_e2db0c820448acae479fa430";
 
 const PLACES = [
-  // Campus & Infrastructure
-  { id: "c1", name: "Amrita Vishwa Vidyapeetham \u2013 Amritapuri", category: "campus", sub: "Main campus \u00b7 Engineering & Sciences", coords: [9.093937, 76.491819] },
+  { id: "c1", name: "Amrita Vishwa Vidyapeetham – Amritapuri", category: "campus", sub: "Main campus · Engineering & Sciences", coords: [9.093937, 76.491819] },
   { id: "c2", name: "Amrita School of Business, Amritapuri", category: "campus", sub: "Management campus", coords: [9.092898, 76.489816] },
   { id: "c3", name: "Amrita School of Biotechnology, Amritapuri", category: "campus", sub: "BioTech campus", coords: [9.092382, 76.489653] },
   { id: "c4", name: "Amrita Ground 2", category: "campus", sub: "Sports Ground", coords: [9.095812, 76.491023] },
 
-  // Hostels
   { id: "h1", name: "Shivam Hostel", category: "hostelBoys", sub: "Boys hostel", coords: [9.098382, 76.490062] },
   { id: "h2", name: "Anugraham Hostel", category: "hostelBoys", sub: "Boys hostel", coords: [9.100200, 76.489788] },
   { id: "h3", name: "Saraswathi Hostel", category: "hostelGirls", sub: "Girls hostel", coords: [9.094357, 76.488377] },
   { id: "h4", name: "Prahalada Hostel", category: "hostelBoys", sub: "Boys hostel", coords:[9.087148, 76.488325] },
 
-  // Restaurants & Food
-  { id: "r1", name: "ANDHRA RUCHULU", category: "restaurant", sub: "South Indian \u00b7 Restaurant", coords: [9.094100, 76.494200] },
-  { id: "r2", name: "North Indian Restaurant", category: "restaurant", sub: "North Indian \u00b7 Dhaba", coords: [9.093500, 76.494800] },
-  { id: "r3", name: "Red Momos Vallikavu", category: "restaurant", sub: "Fast Food \u00b7 Momos", coords: [9.096100, 76.495200] },
+  { id: "r1", name: "ANDHRA RUCHULU", category: "restaurant", sub: "South Indian · Restaurant", coords: [9.094100, 76.494200] },
+  { id: "r2", name: "North Indian Restaurant", category: "restaurant", sub: "North Indian · Dhaba", coords: [9.093500, 76.494800] },
+  { id: "r3", name: "Red Momos Vallikavu", category: "restaurant", sub: "Fast Food · Momos", coords: [9.096100, 76.495200] },
   
-  // Juice & Bakery
-  { id: "bk1", name: "Dhahabie Sijara", category: "bakery", sub: "Juice Centre \u00b7 Cafe", coords: [9.095500, 76.494100] },
+  { id: "bk1", name: "Dhahabie Sijara", category: "bakery", sub: "Juice Centre · Cafe", coords: [9.095500, 76.494100] },
 
-  // Laundry
   { id: "ld1", name: "Bright Wash Laundry", category: "laundry", sub: "Professional Laundry Service", coords: [9.096300, 76.494700] },
   { id: "ld2", name: "Jas Laundry", category: "laundry", sub: "Laundry Service", coords: [9.091021540931296, 76.48727151764652] },
 
 
-  // Banks & ATMs
   { id: "bn1", name: "South Indian Bank", category: "bank", sub: "Amrithapuri Branch", coords: [9.094800, 76.494500] },
   { id: "bn2", name: "South Indian Bank ATM", category: "bank", sub: "ATM", coords: [9.094820, 76.494510] },
   { id: "bn3", name: "Federal Bank ATM", category: "bank", sub: "ATM", coords: [9.092700, 76.494000] },
-  { id: "bn4", name: "SBI Branch Amritapuri", category: "bank", sub: "State Bank of India \u00b7 Branch", coords: [9.091500, 76.492000] },
+  { id: "bn4", name: "SBI Branch Amritapuri", category: "bank", sub: "State Bank of India · Branch", coords: [9.091500, 76.492000] },
 
-  // Stationery & Print
-  { id: "pr1", name: "MS Stores", category: "print", sub: "Stationery \u00b7 Print & Essentials", coords: [9.093200, 76.494300] },
+  { id: "pr1", name: "MS Stores", category: "print", sub: "Stationery · Print & Essentials", coords: [9.093200, 76.494300] },
 
-  // Medical
-  { id: "m1", name: "Nandu Medicals", category: "pharmacy", sub: "Medical shop \u00b7 pharmacy", coords: [9.092292, 76.494301] },
-  { id: "m2", name: "Sri Govinda Medicals", category: "pharmacy", sub: "Medical shop \u00b7 pharmacy", coords: [9.092036, 76.493536] },
+  { id: "m1", name: "Nandu Medicals", category: "pharmacy", sub: "Medical shop · pharmacy", coords: [9.092292, 76.494301] },
+  { id: "m2", name: "Sri Govinda Medicals", category: "pharmacy", sub: "Medical shop · pharmacy", coords: [9.092036, 76.493536] },
   { id: "m3", name: "Amrita Ayurveda Hospital", category: "hospital", sub: "Hospital", coords: [9.088523, 76.493029] },
 
-  // Tech & Service
   { id: "s1", name: "IT Zone Vallikkavu", category: "laptop", sub: "Laptop & computer service", coords: [9.092512, 76.493995] },
   { id: "p1", name: "Phones Hub", category: "phone", sub: "Mobile recharge & service", coords: [9.092115, 76.494108] },
 
-  // Salons & Gyms
   { id: "b1", name: "POSH Unisex Salon", category: "salon", sub: "Barbershop", coords: [9.091701, 76.492279] },
   { id: "b2", name: "Bond Unisex Salon", category: "salon", sub: "Barbershop", coords: [9.091091, 76.490855] },
   { id: "g1", name: "Core Fitness Gym", category: "gym", sub: "Gym", coords: [9.091504, 76.491547] },
   { id: "g2", name: "BodyTech Multi-Fitness Centre", category: "gym", sub: "Gym", coords: [9.091943, 76.494328] },
   { id: "g3", name: "Pulse Fitness Studio", category: "gym", sub: "Gym", coords: [9.093168, 76.493890] },
 
-  // Entertainment & Shopping (Farther distances)
-  { id: "mv1", name: "Carnival Cinemas", category: "movie", sub: "Movie Theatre \u00b7 Karunagappally", coords: [9.057300, 76.536900] },
-  { id: "ml1", name: "H&J Mall", category: "mall", sub: "Shopping Mall \u00b7 Karunagappally", coords: [9.057100, 76.536700] },
-  { id: "ml2", name: "RP Mall", category: "mall", sub: "Shopping Mall \u00b7 Kollam", coords: [8.887500, 76.585500] },
+  { id: "mv1", name: "Carnival Cinemas", category: "movie", sub: "Movie Theatre · Karunagappally", coords: [9.057300, 76.536900] },
+  { id: "ml1", name: "H&J Mall", category: "mall", sub: "Shopping Mall · Karunagappally", coords: [9.057100, 76.536700] },
+  { id: "ml2", name: "RP Mall", category: "mall", sub: "Shopping Mall · Kollam", coords: [8.887500, 76.585500] },
 
-  // Transit
-  { id: "t1", name: "Kayamkulam Junction", category: "railway", sub: "Nearest railway station \u00b7 ~9.5 km", coords: [9.181336, 76.512389] },
+  { id: "t1", name: "Kayamkulam Junction", category: "railway", sub: "Nearest railway station · ~9.5 km", coords: [9.181336, 76.512389] },
   { id: "t2", name: "Kinarumukku Bus Stop", category: "bus", sub: "Bus stop", coords: [9.096913, 76.492981] },
   { id: "t3", name: "Karelil Bus Stop", category: "bus", sub: "Bus stop", coords: [9.096340, 76.496002] },
   { id: "t4", name: "Karunagappally Bus Stand", category: "bus", sub: "Bus stand", coords: [9.051782, 76.536078] },
   { id: "t5", name: "Karunagapally Railway station", category: "railway", sub: "Railway station", coords: [9.065593, 76.544261] },
 
-  // Stays & Landmarks
   { id: "y1", name: "Swetha's Paying Guest", category: "hotel", sub: "PG / guest stay near campus", coords: [9.096582, 76.493597] },
   { id: "l1", name: "Amritapuri Ashram", category: "landmark", sub: "Mata Amritanandamayi Math", coords: [9.088538, 76.487297] },
   { id: "l2", name: "Parayakadavu Beach", category: "landmark", sub: "Arabian Sea", coords: [9.089101, 76.485389] }
@@ -118,7 +99,7 @@ const markerById = {};
 
 const tiles = {
   light: `https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png?key=${encodeURIComponent(cartoApiKey)}`,
-  dark: `https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png?key=${encodeURIComponent(cartoApiKey)}`
+  dark: `https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png`
 };
 
 function setTheme(dark) {
@@ -158,22 +139,18 @@ function distanceLabel(place) {
 }
 
 function estimateAutoFare(km, place) {
-  // Check specific long-distance station drops first
   if (place) {
     if (place.id === "t1") return "₹350–₹400 (Kayamkulam Station)";
     if (place.id === "t5") return "₹300 (Karunagappally Station)";
     if (place.name.toLowerCase().includes("kollam junction")) return "₹1000 (Kollam Station)";
   }
 
-  // Trip is beyond local auto service range
   if (km > 30) {
     return "Distance exceeds local auto range (Taxi/Train recommended)";
   }
 
-  // Local base rate: ₹30 up to 1.1 km
   if (km <= 1.1) return "₹30";
 
-  // Local incremental rate (~₹25/km in ₹10 steps beyond 1.1 km)
   const extraKm = km - 1.1;
   const extraCharge = Math.ceil(extraKm / 0.4) * 10;
   return `₹${30 + extraCharge} (Est.)`;
@@ -239,7 +216,7 @@ function renderPlaces() {
       <span class="place-row-icon" style="background:${meta.color}">${meta.icon}</span>
       <span class="place-row-text">
         <span class="place-row-name">${place.name}</span>
-        <span class="place-row-sub">${meta.label} \u00b7 ${place.sub}${userPosition ? " \u00b7 " + distanceLabel(place) : ""}</span>
+        <span class="place-row-sub">${meta.label} · ${place.sub}${userPosition ? " · " + distanceLabel(place) : ""}</span>
       </span>`;
     row.addEventListener("click", () => selectPlace(place));
     container.appendChild(row);
@@ -271,7 +248,6 @@ function selectPlace(place) {
   else setStatus("Turn on location to see the route", false);
 }
 
-// Extracted from KSRTC 2024 Daily Bus Service Board
 const KSRTC_TIMINGS = {
   north: [
     { k: "6:15 AM", a: "6:30 AM", d: "Amrita Hospital, Kochi" },
@@ -368,11 +344,11 @@ function renderDetail(place) {
       <span class="detail-icon" style="background:${meta.color}">${meta.icon}</span>
       <div class="detail-titles">
         <h3>${place.name}</h3>
-        <p>${meta.label} \u00b7 ${place.sub}</p>
+        <p>${meta.label} · ${place.sub}</p>
       </div>
       <button type="button" class="icon-button detail-close" id="detail-close" aria-label="Close details">&times;</button>
     </div>
-    <div class="route-summary" id="route-summary">${!userPosition ? "Turn on location for turn-by-turn distance." : isWithinCampusRange ? "Calculating route\u2026" : "Routing is available only within 17 km of campus."}</div>
+    <div class="route-summary" id="route-summary">${!userPosition ? "Turn on location for turn-by-turn distance." : isWithinCampusRange ? "Calculating route…" : "Routing is available only within 17 km of campus."}</div>
     <div class="detail-actions">
       <a class="detail-btn primary" id="gmaps-link" target="_blank" rel="noopener">Open in Google Maps</a>
       <button type="button" class="detail-btn" id="recenter-btn">Center on map</button>
@@ -382,8 +358,8 @@ function renderDetail(place) {
   const gmaps = document.getElementById("gmaps-link");
   const dest = `${place.coords[0]},${place.coords[1]}`;
   gmaps.href = userPosition && isWithinCampusRange
-    ? `https://www.google.com/maps/dir/?api=1&origin=${userPosition[0]},${userPosition[1]}&destination=${dest}&travelmode=driving`
-    : `https://www.google.com/maps/search/?api=1&query=${dest}`;
+    ? `https://www.google.com/maps/dir/?api=1&travelmode=driving&origin=${userPosition[0]},${userPosition[1]}&destination=${dest}`
+    : `https://www.google.com/maps/dir/?api=1&travelmode=driving&destination=${dest}`;
 }
 
 function requestRoute(place) {
@@ -409,7 +385,7 @@ function requestRoute(place) {
       const el = document.getElementById("route-summary");
       if (el) {
         el.innerHTML = `
-          ${km} km \u00b7 about ${mins} min by road 
+          ${km} km · about ${mins} min by road 
           <div style="color: var(--muted); font-size: 11.5px; margin-top: 4px; font-weight: 500;">
             Estimated Auto Fare: ${autoFare}
           </div>
@@ -418,7 +394,7 @@ function requestRoute(place) {
     });
     routingControl.on("routingerror", () => {
       const el = document.getElementById("route-summary");
-      if (el) el.textContent = "Route preview unavailable \u2014 use Google Maps for turn-by-turn.";
+      if (el) el.textContent = "Route preview unavailable — use Google Maps for turn-by-turn.";
     });
   }
   routingControl.setWaypoints([L.latLng(userPosition), L.latLng(place.coords)]);
@@ -431,7 +407,7 @@ function setStatus(message, searching = false) {
 
 function locateUser() {
   if (!navigator.geolocation) { setStatus("Location is not supported by this browser"); return; }
-  setStatus("Finding your location\u2026", true);
+  setStatus("Finding your location…", true);
   
   navigator.geolocation.getCurrentPosition(
     ({ coords }) => {
@@ -460,7 +436,7 @@ function locateUser() {
       }
     },
     (error) => {
-      const message = error.code === error.PERMISSION_DENIED ? "Grant permission for location" : "Couldn\u2019t find your location";
+      const message = error.code === error.PERMISSION_DENIED ? "Grant permission for location" : "Couldn't find your location";
       setStatus(message);
     },
     { enableHighAccuracy: true, timeout: 10000, maximumAge: 30000 }
@@ -488,16 +464,16 @@ function initMap() {
     worldCopyJump: false
   }).setView(CAMPUS_CENTER, 15.4);
 
-tileLayer = L.tileLayer(tiles[isDark ? "dark" : "light"], {
-    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>',
+  tileLayer = L.tileLayer(tiles[isDark ? "dark" : "light"], {
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, &copy; <a href="https://carto.com/">CARTO</a>',
     subdomains: "abcd",
     minZoom: 13,
     maxZoom: 18,
     noWrap: true,
     updateWhenIdle: true,
-    keepBuffer: 12,               
-    unloadInvisibleTiles: false,  
-    reuseTiles: true              
+    keepBuffer: 12,
+    unloadInvisibleTiles: false,
+    reuseTiles: true
   }).addTo(map);
 
   PLACES.forEach((place) => {
@@ -512,11 +488,6 @@ tileLayer = L.tileLayer(tiles[isDark ? "dark" : "light"], {
   renderPlaces();
   initSearch();
   locateUser();
-
-  document.querySelector(".theme-toggle").addEventListener("click", () => setTheme(!isDark));
-  document.getElementById("location-button").addEventListener("click", locateUser);
-  document.getElementById("zoom-in").addEventListener("click", () => map.zoomIn());
-  document.getElementById("zoom-out").addEventListener("click", () => map.zoomOut());
 
   const warning = document.getElementById("range-warning");
   if(warning) {
@@ -565,8 +536,50 @@ tileLayer = L.tileLayer(tiles[isDark ? "dark" : "light"], {
 
 initMap();
 
-document.querySelector(".theme-toggle").addEventListener("click", () => setTheme(!isDark));
-  document.getElementById("bus-button").addEventListener("click", openBusSchedule); // <-- Ensure this is here
-  document.getElementById("location-button").addEventListener("click", locateUser);
-  document.getElementById("zoom-in").addEventListener("click", () => map.zoomIn());
-  document.getElementById("zoom-out").addEventListener("click", () => map.zoomOut());
+document.querySelector(".theme-toggle").addEventListener("click", (event) => {
+  const isSwitchingToDark = !isDark;
+
+  // Fallback for browsers that do not support View Transitions
+  if (!document.startViewTransition) {
+    setTheme(isSwitchingToDark);
+    return;
+  }
+
+  // Use precise tap coordinates, fallback to button center if using keyboard
+  const rect = event.currentTarget.getBoundingClientRect();
+  const x = event.clientX || (rect.left + rect.width / 2);
+  const y = event.clientY || (rect.top + rect.height / 2);
+
+  // Calculate radius to the furthest corner + 150px safety buffer for mobile viewport quirks
+  const endRadius = Math.hypot(
+    Math.max(x, window.innerWidth - x),
+    Math.max(y, window.innerHeight - y)
+  ) + 150;
+
+  // Freeze the frame and swap the theme
+  const transition = document.startViewTransition(() => {
+    setTheme(isSwitchingToDark);
+  });
+
+  // Animate the new theme radiating outward
+  transition.ready.then(() => {
+    document.documentElement.animate(
+      {
+        clipPath: [
+          `circle(0px at ${x}px ${y}px)`,
+          `circle(${endRadius}px at ${x}px ${y}px)`
+        ]
+      },
+      {
+        duration: 450,
+        easing: "ease-in", // Accelerates into the corners to hide the transition snap
+        pseudoElement: "::view-transition-new(root)"
+      }
+    );
+  });
+});
+
+document.getElementById("bus-button").addEventListener("click", openBusSchedule);
+document.getElementById("location-button").addEventListener("click", locateUser);
+document.getElementById("zoom-in").addEventListener("click", () => map.zoomIn());
+document.getElementById("zoom-out").addEventListener("click", () => map.zoomOut());

@@ -12,19 +12,7 @@
   --map-filter: none;
 }
 
-html[data-theme="dark"] {
-  --bg: #202124;
-  --surface: rgba(48, 49, 52, .95);
-  --text: #f1f3f4;
-  --muted: #bdc1c6;
-  --border: rgba(255, 255, 255, 0.12);
-  --maroon: #e0596b;
-  --maroon-dark: #ff8a97;
-  --maroon-soft: rgba(224, 89, 107, 0.16);
-  --gold: #f0be6f;
-  --shadow: 0 14px 35px rgba(0, 0, 0, 0.34);
-  --map-filter: invert(.88) hue-rotate(180deg) brightness(.79) contrast(.9) saturate(.68);
-}
+
 
 * { box-sizing: border-box; }
 
@@ -51,7 +39,21 @@ button { font: inherit; }
   position: absolute;
   inset: 0;
   z-index: 0;
-  filter: var(--map-filter);
+  background-color: var(--bg);
+}
+
+html[data-theme="dark"] {
+  --bg: #202124; 
+  --surface: rgba(32, 33, 36, 0.95); 
+  --text: #e8eaed; 
+  --muted: #9aa0a6; 
+  --border: #3c4043; 
+  --shadow: 0 4px 12px rgba(0, 0, 0, 0.5); 
+  --maroon: #8ab4f8; 
+  --maroon-dark: #aecbfa; 
+  --maroon-soft: rgba(138, 180, 248, 0.12); 
+  --gold: #fdd663; 
+  filter: brightness(.7) contrast(1.1);  
 }
 
 .leaflet-control-container { display: none; }
@@ -525,4 +527,22 @@ h2 { margin: 0; font-size: 15px; letter-spacing: -.2px; }
   font-weight: 600;
   color: var(--text);
   box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+}
+
+
+
+/* Disable the default browser crossfade */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+/* Keep the old theme frozen in the background while the new theme expands over it */
+::view-transition-old(root) {
+  z-index: 1;
+}
+
+::view-transition-new(root) {
+  z-index: 2;
 }
