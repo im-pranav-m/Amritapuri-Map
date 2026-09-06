@@ -21,35 +21,87 @@ const CATEGORY_META = {
   railway:    { label: "Railway",       color: "#1D4ED8", icon: '<i class="fi fi-rr-train" aria-hidden="true"></i>' },
   bus:        { label: "Bus stop",      color: "#B58900", icon: '<i class="fi fi-rr-bus" aria-hidden="true"></i>' },
   hotel:      { label: "Stay / hotel",  color: "#B8860B", icon: '<i class="fi fi-rr-hotel" aria-hidden="true"></i>' },
-  landmark:   { label: "Landmark",      color: "#E8A33D", icon: '<i class="fi fi-rr-monument" aria-hidden="true"></i>' }
+  landmark:   { label: "Landmark",      color: "#E8A33D", icon: '<i class="fi fi-rr-monument" aria-hidden="true"></i>' },
+  restaurant: { label: "Restaurant",    color: "#E03C31", icon: '<i class="fi fi-rr-restaurant" aria-hidden="true"></i>' },
+  laundry:    { label: "Laundry",       color: "#0284C7", icon: '<i class="fi fi-rr-washer" aria-hidden="true"></i>' },
+  bank:       { label: "Bank & ATM",    color: "#059669", icon: '<i class="fi fi-rr-bank" aria-hidden="true"></i>' },
+  mall:       { label: "Mall",          color: "#9333EA", icon: '<i class="fi fi-rr-shopping-bag" aria-hidden="true"></i>' },
+  movie:      { label: "Movie Theatre", color: "#E11D48", icon: '<i class="fi fi-rr-film" aria-hidden="true"></i>' },
+  print:      { label: "Stationery",    color: "#0EA5E9", icon: '<i class="fi fi-rr-print" aria-hidden="true"></i>' },
+  bakery:     { label: "Juice/Bakery",  color: "#F59E0B", icon: '<i class="fi fi-rr-shop" aria-hidden="true"></i>' }
 };
 
-const CHIP_ORDER = ["all", "campus", "hostelBoys", "hostelGirls", "hospital", "pharmacy", "gym", "laptop", "phone", "salon", "railway", "bus", "hotel", "landmark"];
+const CHIP_ORDER = ["all", "campus", "restaurant", "bakery", "print", "bank", "laundry", "hostelBoys", "hostelGirls", "hospital", "pharmacy", "gym", "laptop", "phone", "salon", "mall", "movie", "railway", "bus", "hotel", "landmark"];
 
 const cartoApiKey = "cb1_2ynn_1_e2db0c820448acae479fa430";
 
 const PLACES = [
-  { id: "c1", name: "Amrita Vishwa Vidyapeetham \u2013 Amritapuri", category: "campus", sub: "Main campus \u00b7 Engineering & Sciences", coords: [9.093937, 76.4918194] },
-  { id: "c2", name: "Amrita School of Business, Amritapuri", category: "campus", sub: "Management campus", coords: [9.0928985, 76.4898167] },
-  { id: "h1", name: "Shivam Hostel", category: "hostelBoys", sub: "Boys hostel", coords: [9.0983829, 76.4900625] },
-  { id: "h2", name: "Anugraham Hostel", category: "hostelBoys", sub: "Boys hostel", coords: [9.1002005, 76.4897883] },
-  { id: "h3", name: "Saraswathi Hostel", category: "hostelGirls", sub: "Girls hostel", coords: [9.0943579, 76.4883774] },
-  { id: "m1", name: "Nandu Medicals", category: "pharmacy", sub: "Medical shop \u00b7 pharmacy", coords: [9.0922921, 76.4943018] },
-  { id: "m2", name: "Sri Govinda Medicals", category: "pharmacy", sub: "Medical shop \u00b7 pharmacy", coords: [9.0920369, 76.4935367] },
-  { id: "m3", name: "Amrita Ayurveda Hospital", category: "hospital", sub: "Hospital", coords: [9.0885237, 76.4930295] },
-  { id: "s1", name: "IT Zone Vallikkavu", category: "laptop", sub: "Laptop & computer service", coords: [9.0925124, 76.4939956] },
-  { id: "s2", name: "Amrita Technologies", category: "laptop", sub: "Computer service centre", coords: [9.0946676, 76.4929727] },
-  { id: "p1", name: "Phones Hub", category: "phone", sub: "Mobile recharge & service", coords: [9.0921159, 76.4941082] },
-  { id: "b1", name: "POSH Unisex Salon", category: "salon", sub: "Barbershop", coords: [9.0917017, 76.4922794] },
-  { id: "b2", name: "Bond Unisex Salon", category: "salon", sub: "Barbershop", coords: [9.0910917, 76.4908555] },
-  { id: "g1", name: "Core Fitness Gym", category: "gym", sub: "Gym", coords: [9.0915049, 76.4915472] },
-  { id: "g2", name: "BodyTech Multi-Fitness Centre", category: "gym", sub: "Gym", coords: [9.0919433, 76.4943281] },
-  { id: "t1", name: "Kayamkulam Junction", category: "railway", sub: "Nearest railway station \u00b7 ~9.5 km", coords: [9.1813368, 76.5123891] },
-  { id: "t2", name: "Kinarumukku Bus Stop", category: "bus", sub: "Bus stop", coords: [9.0969134, 76.4929815] },
-  { id: "t3", name: "Karelil Bus Stop", category: "bus", sub: "Bus stop", coords: [9.0963403, 76.4960020] },
-  { id: "y1", name: "Swetha's Paying Guest", category: "hotel", sub: "PG / guest stay near campus", coords: [9.0965828, 76.4935979] },
-  { id: "l1", name: "Amritapuri Ashram", category: "landmark", sub: "Mata Amritanandamayi Math", coords: [9.0885386, 76.4872978] },
-  { id: "l2", name: "Parayakadavu Beach", category: "landmark", sub: "Arabian Sea", coords: [9.0891010, 76.4853891] }
+  // Campus & Infrastructure
+  { id: "c1", name: "Amrita Vishwa Vidyapeetham \u2013 Amritapuri", category: "campus", sub: "Main campus \u00b7 Engineering & Sciences", coords: [9.093937, 76.491819] },
+  { id: "c2", name: "Amrita School of Business, Amritapuri", category: "campus", sub: "Management campus", coords: [9.092898, 76.489816] },
+  { id: "c3", name: "Amrita School of Biotechnology, Amritapuri", category: "campus", sub: "BioTech campus", coords: [9.092382, 76.489653] },
+  { id: "c4", name: "Amrita Ground 2", category: "campus", sub: "Sports Ground", coords: [9.095812, 76.491023] },
+
+  // Hostels
+  { id: "h1", name: "Shivam Hostel", category: "hostelBoys", sub: "Boys hostel", coords: [9.098382, 76.490062] },
+  { id: "h2", name: "Anugraham Hostel", category: "hostelBoys", sub: "Boys hostel", coords: [9.100200, 76.489788] },
+  { id: "h3", name: "Saraswathi Hostel", category: "hostelGirls", sub: "Girls hostel", coords: [9.094357, 76.488377] },
+  { id: "h4", name: "Prahalada Hostel", category: "hostelBoys", sub: "Boys hostel", coords:[9.087148, 76.488325] },
+
+  // Restaurants & Food
+  { id: "r1", name: "ANDHRA RUCHULU", category: "restaurant", sub: "South Indian \u00b7 Restaurant", coords: [9.094100, 76.494200] },
+  { id: "r2", name: "North Indian Restaurant", category: "restaurant", sub: "North Indian \u00b7 Dhaba", coords: [9.093500, 76.494800] },
+  { id: "r3", name: "Red Momos Vallikavu", category: "restaurant", sub: "Fast Food \u00b7 Momos", coords: [9.096100, 76.495200] },
+  
+  // Juice & Bakery
+  { id: "bk1", name: "Dhahabie Sijara", category: "bakery", sub: "Juice Centre \u00b7 Cafe", coords: [9.095500, 76.494100] },
+
+  // Laundry
+  { id: "ld1", name: "Bright Wash Laundry", category: "laundry", sub: "Professional Laundry Service", coords: [9.096300, 76.494700] },
+  { id: "ld2", name: "Jas Laundry", category: "laundry", sub: "Laundry Service", coords: [9.091021540931296, 76.48727151764652] },
+
+
+  // Banks & ATMs
+  { id: "bn1", name: "South Indian Bank", category: "bank", sub: "Amrithapuri Branch", coords: [9.094800, 76.494500] },
+  { id: "bn2", name: "South Indian Bank ATM", category: "bank", sub: "ATM", coords: [9.094820, 76.494510] },
+  { id: "bn3", name: "Federal Bank ATM", category: "bank", sub: "ATM", coords: [9.092700, 76.494000] },
+  { id: "bn4", name: "SBI Branch Amritapuri", category: "bank", sub: "State Bank of India \u00b7 Branch", coords: [9.091500, 76.492000] },
+
+  // Stationery & Print
+  { id: "pr1", name: "MS Stores", category: "print", sub: "Stationery \u00b7 Print & Essentials", coords: [9.093200, 76.494300] },
+
+  // Medical
+  { id: "m1", name: "Nandu Medicals", category: "pharmacy", sub: "Medical shop \u00b7 pharmacy", coords: [9.092292, 76.494301] },
+  { id: "m2", name: "Sri Govinda Medicals", category: "pharmacy", sub: "Medical shop \u00b7 pharmacy", coords: [9.092036, 76.493536] },
+  { id: "m3", name: "Amrita Ayurveda Hospital", category: "hospital", sub: "Hospital", coords: [9.088523, 76.493029] },
+
+  // Tech & Service
+  { id: "s1", name: "IT Zone Vallikkavu", category: "laptop", sub: "Laptop & computer service", coords: [9.092512, 76.493995] },
+  { id: "p1", name: "Phones Hub", category: "phone", sub: "Mobile recharge & service", coords: [9.092115, 76.494108] },
+
+  // Salons & Gyms
+  { id: "b1", name: "POSH Unisex Salon", category: "salon", sub: "Barbershop", coords: [9.091701, 76.492279] },
+  { id: "b2", name: "Bond Unisex Salon", category: "salon", sub: "Barbershop", coords: [9.091091, 76.490855] },
+  { id: "g1", name: "Core Fitness Gym", category: "gym", sub: "Gym", coords: [9.091504, 76.491547] },
+  { id: "g2", name: "BodyTech Multi-Fitness Centre", category: "gym", sub: "Gym", coords: [9.091943, 76.494328] },
+  { id: "g3", name: "Pulse Fitness Studio", category: "gym", sub: "Gym", coords: [9.093168, 76.493890] },
+
+  // Entertainment & Shopping (Farther distances)
+  { id: "mv1", name: "Carnival Cinemas", category: "movie", sub: "Movie Theatre \u00b7 Karunagappally", coords: [9.057300, 76.536900] },
+  { id: "ml1", name: "H&J Mall", category: "mall", sub: "Shopping Mall \u00b7 Karunagappally", coords: [9.057100, 76.536700] },
+  { id: "ml2", name: "RP Mall", category: "mall", sub: "Shopping Mall \u00b7 Kollam", coords: [8.887500, 76.585500] },
+
+  // Transit
+  { id: "t1", name: "Kayamkulam Junction", category: "railway", sub: "Nearest railway station \u00b7 ~9.5 km", coords: [9.181336, 76.512389] },
+  { id: "t2", name: "Kinarumukku Bus Stop", category: "bus", sub: "Bus stop", coords: [9.096913, 76.492981] },
+  { id: "t3", name: "Karelil Bus Stop", category: "bus", sub: "Bus stop", coords: [9.096340, 76.496002] },
+  { id: "t4", name: "Karunagappally Bus Stand", category: "bus", sub: "Bus stand", coords: [9.051782, 76.536078] },
+  { id: "t5", name: "Karunagapally Railway station", category: "railway", sub: "Railway station", coords: [9.065593, 76.544261] },
+
+  // Stays & Landmarks
+  { id: "y1", name: "Swetha's Paying Guest", category: "hotel", sub: "PG / guest stay near campus", coords: [9.096582, 76.493597] },
+  { id: "l1", name: "Amritapuri Ashram", category: "landmark", sub: "Mata Amritanandamayi Math", coords: [9.088538, 76.487297] },
+  { id: "l2", name: "Parayakadavu Beach", category: "landmark", sub: "Arabian Sea", coords: [9.089101, 76.485389] }
 ];
 
 const savedTheme = localStorage.getItem("amritapuri-theme");
@@ -103,6 +155,28 @@ function distanceLabel(place) {
   if (!userPosition) return "";
   const km = haversineKm(userPosition, place.coords);
   return km < 1 ? `${Math.round(km * 1000)} m away` : `${km.toFixed(1)} km away`;
+}
+
+function estimateAutoFare(km, place) {
+  // Check specific long-distance station drops first
+  if (place) {
+    if (place.id === "t1") return "₹350–₹400 (Kayamkulam Station)";
+    if (place.id === "t5") return "₹300 (Karunagappally Station)";
+    if (place.name.toLowerCase().includes("kollam junction")) return "₹1000 (Kollam Station)";
+  }
+
+  // Trip is beyond local auto service range
+  if (km > 30) {
+    return "Distance exceeds local auto range (Taxi/Train recommended)";
+  }
+
+  // Local base rate: ₹30 up to 1.1 km
+  if (km <= 1.1) return "₹30";
+
+  // Local incremental rate (~₹25/km in ₹10 steps beyond 1.1 km)
+  const extraKm = km - 1.1;
+  const extraCharge = Math.ceil(extraKm / 0.4) * 10;
+  return `₹${30 + extraCharge} (Est.)`;
 }
 
 function setRangeWarning(show) {
@@ -197,6 +271,87 @@ function selectPlace(place) {
   else setStatus("Turn on location to see the route", false);
 }
 
+// Extracted from KSRTC 2024 Daily Bus Service Board
+const KSRTC_TIMINGS = {
+  north: [
+    { k: "6:15 AM", a: "6:30 AM", d: "Amrita Hospital, Kochi" },
+    { k: "6:30 AM", a: "6:45 AM", d: "Valiyazheekal" },
+    { k: "7:00 AM", a: "7:20 AM", d: "Valiyazheekal" },
+    { k: "8:00 AM", a: "8:20 AM", d: "Arattupuzha" },
+    { k: "8:25 AM", a: "8:40 AM", d: "Ambalapuzha, NH 66" },
+    { k: "9:10 AM", a: "9:30 AM", d: "Valiyazheekal" },
+    { k: "10:35 AM", a: "10:50 AM", d: "Valiyazheekal" },
+    { k: "11:00 AM", a: "11:20 AM", d: "Valiyazheekal" },
+    { k: "11:45 AM", a: "12:05 PM", d: "Valiyazheekal" },
+    { k: "12:40 PM", a: "1:05 PM", d: "Valiyazheekal" },
+    { k: "1:20 PM", a: "1:40 PM", d: "Thottapally, NH 66" },
+    { k: "2:40 PM", a: "3:00 PM", d: "Valiyazheekal" },
+    { k: "3:45 PM", a: "4:05 PM", d: "Cherthala, NH 66" },
+    { k: "4:30 PM", a: "4:50 PM", d: "Valiyazheekal" },
+    { k: "5:30 PM", a: "5:50 PM", d: "Valiyazheekal" },
+    { k: "6:00 PM", a: "6:20 PM", d: "Valiyazheekal" }
+  ],
+  south: [
+    "5:25 AM (To TVM)", "7:40 AM", "8:05 AM", "8:40 AM",
+    "10:15 AM", "11:00 AM", "11:45 AM", "12:05 PM",
+    "12:55 PM", "1:40 PM", "2:00 PM", "3:15 PM",
+    "4:00 PM", "5:00 PM", "5:30 PM", "6:00 PM", "7:10 PM"
+  ]
+};
+
+function getBusScheduleHTML() {
+  const northRows = KSRTC_TIMINGS.north.map(t => `
+    <tr>
+      <td>${t.k}</td>
+      <td><strong>${t.a}</strong></td>
+      <td>${t.d}</td>
+    </tr>
+  `).join("");
+
+  const southPills = KSRTC_TIMINGS.south.map(t => `
+    <span class="time-pill">${t}</span>
+  `).join("");
+
+  return `
+    <div class="bus-schedule">
+      <div class="bus-section">
+        <h4>From Campus to Northern Side (Via Beach Rd)</h4>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Leaves K'pally</th><th>Leaves Campus</th><th>Destination</th></tr></thead>
+            <tbody>${northRows}</tbody>
+          </table>
+        </div>
+      </div>
+      <div class="bus-section">
+        <h4>From Campus to Karunagappally (South)</h4>
+        <div class="pill-wrap">${southPills}</div>
+      </div>
+    </div>
+  `;
+}
+
+function openBusSchedule() {
+  setSheetCollapsed(false);
+  document.getElementById("sheet").classList.add("detail-open");
+  
+  const panel = document.getElementById("detail");
+  
+  panel.innerHTML = `
+    <div class="detail-head">
+      <span class="detail-icon" style="background:#B58900"><i class="fi fi-rr-bus" aria-hidden="true"></i></span>
+      <div class="detail-titles">
+        <h3>KSRTC Bus Schedule</h3>
+        <p>2024 Daily Service Timings</p>
+      </div>
+      <button type="button" class="icon-button detail-close" id="detail-close" aria-label="Close details">&times;</button>
+    </div>
+    ${getBusScheduleHTML()}
+  `;
+  
+  document.getElementById("detail-close").addEventListener("click", closeDetail);
+}
+
 function closeDetail() {
   activePlace = null;
   document.getElementById("sheet").classList.remove("detail-open");
@@ -250,8 +405,16 @@ function requestRoute(place) {
       const r = e.routes[0];
       const km = (r.summary.totalDistance / 1000).toFixed(1);
       const mins = Math.round(r.summary.totalTime / 60);
+      const autoFare = estimateAutoFare(parseFloat(km));
       const el = document.getElementById("route-summary");
-      if (el) el.textContent = `${km} km \u00b7 about ${mins} min by road`;
+      if (el) {
+        el.innerHTML = `
+          ${km} km \u00b7 about ${mins} min by road 
+          <div style="color: var(--muted); font-size: 11.5px; margin-top: 4px; font-weight: 500;">
+            Estimated Auto Fare: ${autoFare}
+          </div>
+        `;
+      }
     });
     routingControl.on("routingerror", () => {
       const el = document.getElementById("route-summary");
@@ -324,14 +487,17 @@ function initMap() {
     maxBoundsViscosity: 1.0,
     worldCopyJump: false
   }).setView(CAMPUS_CENTER, 15.4);
-  tileLayer = L.tileLayer(tiles[isDark ? "dark" : "light"], {
+
+tileLayer = L.tileLayer(tiles[isDark ? "dark" : "light"], {
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>',
     subdomains: "abcd",
     minZoom: 13,
     maxZoom: 18,
     noWrap: true,
     updateWhenIdle: true,
-    keepBuffer: 1
+    keepBuffer: 12,               
+    unloadInvisibleTiles: false,  
+    reuseTiles: true              
   }).addTo(map);
 
   PLACES.forEach((place) => {
@@ -398,3 +564,9 @@ function initMap() {
 }
 
 initMap();
+
+document.querySelector(".theme-toggle").addEventListener("click", () => setTheme(!isDark));
+  document.getElementById("bus-button").addEventListener("click", openBusSchedule); // <-- Ensure this is here
+  document.getElementById("location-button").addEventListener("click", locateUser);
+  document.getElementById("zoom-in").addEventListener("click", () => map.zoomIn());
+  document.getElementById("zoom-out").addEventListener("click", () => map.zoomOut());
